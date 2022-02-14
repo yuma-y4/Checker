@@ -3,7 +3,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 const SignIn = () => (
   <Container component="main" maxWidth="xs">
@@ -49,6 +51,18 @@ const SignIn = () => (
           Sign In
         </Button>
       </Box>
+      <Grid container>
+        <Grid item xs>
+          <Link href="/" variant="body2">
+            Forgot password?
+          </Link>
+        </Grid>
+        <Grid item>
+          <Link href="/signup" variant="body2">
+            Do you have an account? Sign Up
+          </Link>
+        </Grid>
+      </Grid>
     </Box>
   </Container>
 );

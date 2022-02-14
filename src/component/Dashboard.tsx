@@ -126,7 +126,9 @@ const SideBar = () => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Checker
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" href="signin">
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

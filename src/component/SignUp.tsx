@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import Link from '@mui/material/Link';
 
 const SignUp = () => (
   <Container component="main" maxWidth="xs">
@@ -65,6 +65,13 @@ const SignUp = () => (
         >
           Sign Up
         </Button>
+        <Grid container justifyContent="flex-end">
+          <Grid item>
+            <Link href="/signin" variant="body2">
+              Already have an account? Sign in
+            </Link>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   </Container>
