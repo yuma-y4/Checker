@@ -5,19 +5,22 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.4.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.11",
-    "@types/react": "^17.0.0",
+    "@types/node": "^17.0.14",
+    "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.0",
-    "@types/stylelint": "^13.13.3",
+    "@types/stylelint": "^14.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.5.2",
+    "react-router": "^6.2.1",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.5.5",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
@@ -61,11 +64,10 @@
     "@types/testing-library__user-event": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
-    "eslint-config-airbnb": "^19.0.1",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.5.0",
@@ -74,21 +76,5 @@
     "stylelint-config-standard": "^24.0.0",
     "stylelint-order": "^5.0.0",
     "typesync": "^0.8.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": ". ./lint-staged-around",
-    "pre-push": ". ./test-around"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "prettier --write --loglevel=error",
-      "eslint --fix --quiet"
-    ],
-    "src/**/*.{css,less,sass,scss}": [
-      "stylelint --fix --quiet"
-    ],
-    "{public,src}/**/*.{html,gql,graphql,json}": [
-      "prettier --write --loglevel=error"
-    ]
   }
 }
