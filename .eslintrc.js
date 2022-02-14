@@ -29,13 +29,19 @@ module.exports = {
     '@typescript-eslint',
     'import',
     'jsx-a11y',
-    'prefer-arrow',
     'react',
     'react-hooks',
   ],
   root: true,
 
   rules: {
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'lines-between-class-members': [
@@ -79,14 +85,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'prefer-arrow/prefer-arrow-functions': [
-      'error',
-      {
-        disallowPrototype: true,
-        singleReturnOnly: false,
-        classPropertiesAllowed: false,
-      },
-    ],
+
     'react/jsx-filename-extension': [
       'error',
       {
