@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -126,7 +127,7 @@ const SideBar = () => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Checker
           </Typography>
-          <Button color="inherit" href="signin">
+          <Button color="inherit" component={Link} to="signin">
             Login
           </Button>
         </Toolbar>

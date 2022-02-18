@@ -4,9 +4,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const SignUp = () => (
   <Container component="main" maxWidth="xs">
@@ -67,7 +68,7 @@ const SignUp = () => (
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="/signin" variant="body2">
+            <Link to="/signin" component={RouterLink} variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>
