@@ -1,4 +1,4 @@
-import {  Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { VFC } from 'react';
 import SignUp from './component/SignUp';
 import SignIn from './component/SignIn';
@@ -13,4 +13,5 @@ const App: VFC = () => (
     <Route path="*" element={<NoMatch />} />
   </Routes>
 );
+
 export default App;
