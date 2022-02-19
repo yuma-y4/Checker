@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { getAuth } from 'firebase/auth';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +23,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
+import LoginIcon from '@mui/icons-material/Login';
 import Column from './Column';
 
 const drawerWidth = 240;
@@ -97,7 +100,6 @@ const Drawer = styled(MuiDrawer, {
 const SideBar = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -105,6 +107,9 @@ const SideBar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const auth = getAuth();
+  const Loginuser = auth.currentUser;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -126,7 +131,15 @@ const SideBar = () => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Checker
           </Typography>
-          <Button color="inherit">Login</Button>
+          {Loginuser ? (
+            <Button color="inherit" onClick={() => auth.signOut()}>
+              Logout
+            </Button>
+          ) : (
+            <Button color="inherit" component={Link} to="signin">
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -140,39 +153,50 @@ const SideBar = () => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          <ListItemButton>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <ListItemText primary="Send Tweet" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="User" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Setting" />
-          </ListItemButton>
-          <Divider />
-          <ListItemButton>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add Column" />
-          </ListItemButton>
-        </List>
+        {Loginuser ? (
+          <List>
+            <ListItemButton>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary="Send Tweet" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="User" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Setting" />
+            </ListItemButton>
+            <Divider />
+            <ListItemButton>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add Column" />
+            </ListItemButton>
+          </List>
+        ) : (
+          <List>
+            <ListItemButton component={Link} to="signin">
+              <ListItemIcon>
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </List>
+        )}
       </Drawer>
       <Box component="main">
         <DrawerHeader />
