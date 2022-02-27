@@ -1,8 +1,10 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -24,6 +26,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import LoginIcon from '@mui/icons-material/Login';
+import { selectUser } from '../features/userSlice';
 import Column from './Column';
 
 const drawerWidth = 240;
@@ -107,9 +110,11 @@ const SideBar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const LoginUser = useSelector(selectUser);
   const auth = getAuth();
-  const Loginuser = auth.currentUser;
+  const SignOut = () => {
+    signOut(auth);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -128,11 +133,14 @@ const SideBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Checker
-          </Typography>
-          {Loginuser ? (
-            <Button color="inherit" onClick={() => auth.signOut()}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1 }}
+          />
+          {LoginUser ? (
+            <Button color="inherit" onClick={SignOut}>
               Logout
             </Button>
           ) : (
@@ -153,7 +161,7 @@ const SideBar = () => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        {Loginuser ? (
+        {LoginUser ? (
           <List>
             <ListItemButton>
               <ListItemIcon>
