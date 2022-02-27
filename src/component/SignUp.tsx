@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -7,19 +9,27 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link as RouterLink } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { updateUserProfile } from '../features/userSlice';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
   const auth = getAuth();
+
   const Register = async () => {
     await createUserWithEmailAndPassword(auth, email, password);
-    await addDoc(collection(db, 'users'), {
+    dispatch(
+      updateUserProfile({
+        displayName: username,
+        photoUrl: '',
+      }),
+    );
+    await addDoc(collection(db, 'Users'), {
       UserName: username,
       UserEmail: email,
     });
@@ -95,6 +105,7 @@ const SignUp = () => {
             <Grid item>
               <Link to="/signin" component={RouterLink} variant="body2">
                 Already have an account? Sign in
+
               </Link>
             </Grid>
           </Grid>
