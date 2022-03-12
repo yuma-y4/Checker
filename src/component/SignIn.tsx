@@ -15,8 +15,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
 
   const auth = getAuth();
-
-  const Register = async () => {
+  const ClickLogin = async () => {
     await signInWithEmailAndPassword(auth, useemail, password);
   };
 
@@ -68,7 +67,7 @@ const SignIn = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={Register}
+            onClick={ClickLogin}
           >
             Sign Up
           </Button>

@@ -55,7 +55,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -98,7 +97,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const SideBar = () => {
+const Dashboard = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -198,4 +197,4 @@ const SideBar = () => {
     </Box>
   );
 };
-export default SideBar;
+export default Dashboard;

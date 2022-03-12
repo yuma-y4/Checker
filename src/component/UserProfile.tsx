@@ -48,10 +48,10 @@ const UserProfile: VFC<LoginUser> = (props) => {
     display: 'none',
   });
 
-  const handleClickOpen = () => {
+  const DialogClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
+  const DialogClose = () => {
     setOpen(false);
   };
 
@@ -102,18 +102,19 @@ const UserProfile: VFC<LoginUser> = (props) => {
   };
 
   return (
-    <div>
-      <ListItemButton onClick={handleClickOpen}>
+    <>
+      <ListItemButton onClick={DialogClickOpen}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText primary="User" />
       </ListItemButton>
+
       <Dialog
         fullScreen={fullScreen}
         fullWidth
         open={open}
-        onClose={handleClose}
+        onClose={DialogClose}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">UserProfile</DialogTitle>
@@ -186,12 +187,12 @@ const UserProfile: VFC<LoginUser> = (props) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={DialogClose}>
             閉じる
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 
