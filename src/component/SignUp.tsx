@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,26 +12,29 @@ import Container from '@mui/material/Container';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { updateUserProfile } from '../features/userSlice';
+import { updateUserProfile, selectUser } from '../features/userSlice';
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
+  const [useemail, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const auth = getAuth();
 
   const Register = async () => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, useemail, password);
     dispatch(
       updateUserProfile({
         displayName: username,
         photoUrl: '',
+        email: useemail,
       }),
     );
     await addDoc(collection(db, 'Users'), {
       UserName: username,
-      UserEmail: email,
+      UserEmail: useemail,
+      uid: user.uid,
     });
   };
 
@@ -105,7 +108,6 @@ const SignUp = () => {
             <Grid item>
               <Link to="/signin" component={RouterLink} variant="body2">
                 Already have an account? Sign in
-
               </Link>
             </Grid>
           </Grid>
