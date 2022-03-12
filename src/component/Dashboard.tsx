@@ -12,22 +12,20 @@ import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import SettingsIcon from '@mui/icons-material/Settings';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import LoginIcon from '@mui/icons-material/Login';
 import { selectUser } from '../features/userSlice';
 import Column from './Column';
+import UserProfile from './UserProfile';
 
 const drawerWidth = 240;
 
@@ -57,7 +55,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -100,7 +97,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const SideBar = () => {
+const Dashboard = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -169,31 +166,18 @@ const SideBar = () => {
               </ListItemIcon>
               <ListItemText primary="Send Tweet" />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="User" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Setting" />
-            </ListItemButton>
-            <Divider />
+            <UserProfile
+              email={LoginUser.email}
+              displayName={LoginUser.displayName}
+            />
+
             <ListItemButton>
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               <ListItemText primary="Add Column" />
             </ListItemButton>
+            <Divider />
           </List>
         ) : (
           <List>
@@ -213,4 +197,4 @@ const SideBar = () => {
     </Box>
   );
 };
-export default SideBar;
+export default Dashboard;
