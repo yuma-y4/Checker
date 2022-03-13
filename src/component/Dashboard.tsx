@@ -21,11 +21,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AddIcon from '@mui/icons-material/Add';
-import SendIcon from '@mui/icons-material/Send';
 import LoginIcon from '@mui/icons-material/Login';
 import { selectUser } from '../features/userSlice';
 import Column from './Column';
 import UserProfile from './UserProfile';
+import Post from './Post';
 
 const drawerWidth = 240;
 
@@ -160,12 +160,7 @@ const Dashboard = () => {
         <Divider />
         {LoginUser ? (
           <List>
-            <ListItemButton>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary="Send Tweet" />
-            </ListItemButton>
+            <Post />
             <UserProfile
               email={LoginUser.email}
               displayName={LoginUser.displayName}
