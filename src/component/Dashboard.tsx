@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
@@ -13,6 +13,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -21,11 +23,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AddIcon from '@mui/icons-material/Add';
-import SendIcon from '@mui/icons-material/Send';
 import LoginIcon from '@mui/icons-material/Login';
 import { selectUser } from '../features/userSlice';
 import Column from './Column';
 import UserProfile from './UserProfile';
+import Post from './Post';
 
 const drawerWidth = 240;
 
@@ -112,6 +114,14 @@ const Dashboard = () => {
   const SignOut = () => {
     signOut(auth);
   };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const expansion = Boolean(anchorEl);
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -160,24 +170,40 @@ const Dashboard = () => {
         <Divider />
         {LoginUser ? (
           <List>
-            <ListItemButton>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary="Send Tweet" />
-            </ListItemButton>
+            <Post />
             <UserProfile
               email={LoginUser.email}
               displayName={LoginUser.displayName}
             />
 
-            <ListItemButton>
+            <ListItemButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={expansion ? 'long-menu' : undefined}
+              aria-expanded={expansion ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               <ListItemText primary="Add Column" />
             </ListItemButton>
             <Divider />
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={expansion}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Home</MenuItem>
+              <MenuItem onClick={handleClose}>User</MenuItem>
+              <MenuItem onClick={handleClose}>Chart</MenuItem>
+              <MenuItem onClick={handleClose}>Price</MenuItem>
+            </Menu>
           </List>
         ) : (
           <List>
