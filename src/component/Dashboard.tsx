@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
@@ -20,6 +21,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
+import Avatar from '@mui/material/Avatar';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import { collection, onSnapshot } from 'firebase/firestore';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AddIcon from '@mui/icons-material/Add';
@@ -28,6 +34,7 @@ import { selectUser } from '../features/userSlice';
 import Column from './Column';
 import UserProfile from './UserProfile';
 import Post from './Post';
+import { db } from '../firebase';
 
 const drawerWidth = 240;
 
@@ -123,6 +130,32 @@ const Dashboard = () => {
     setAnchorEl(null);
   };
 
+  const [posts, setPosts] = useState([
+    {
+      id: '',
+      postId: '',
+      text: '',
+      username: '',
+    },
+  ]);
+
+  useEffect(() => {
+    const usersCollectionRef = collection(db, 'Posttweets');
+    const unsub = onSnapshot(usersCollectionRef, (querySnapshot) => {
+      setPosts(
+        querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+          postId: doc.data().postId,
+          text: doc.data().text,
+          username: doc.data().username,
+        })),
+      );
+    });
+
+    return unsub;
+  }, []);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -170,7 +203,11 @@ const Dashboard = () => {
         <Divider />
         {LoginUser ? (
           <List>
-            <Post />
+            <Post
+              email={LoginUser.email}
+              displayName={LoginUser.displayName}
+              uid={LoginUser.uid}
+            />
             <UserProfile
               email={LoginUser.email}
               displayName={LoginUser.displayName}
@@ -218,7 +255,28 @@ const Dashboard = () => {
       </Drawer>
       <Box component="main">
         <DrawerHeader />
-        <Column />
+        {posts[0]?.id && (
+          <>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <HomeIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Home" />
+            </ListItem>
+            <Divider />
+            {posts.map((post) => (
+              <Column
+                key={post.id}
+                postId={post.postId}
+                text={post.text}
+                username={post.username}
+                uid={LoginUser.uid}
+              />
+            ))}
+          </>
+        )}
       </Box>
     </Box>
   );

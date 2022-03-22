@@ -1,4 +1,5 @@
-import * as React from 'react';
+/* eslint-disable react/destructuring-assignment */
+import { VFC } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,26 +12,18 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import HomeIcon from '@mui/icons-material/Home';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Divider from '@mui/material/Divider';
 
+type Props = {
+  username: string;
+  postId: string;
+  text: string;
+  uid: string;
+};
 
-const Column = () => (
-  <List sx={{maxWidth: 345, bgcolor: 'background.paper' }}>
-    <ListItem>
-      <ListItemAvatar>
-        <Avatar>
-          <HomeIcon />
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary="Home" secondary="Jan 9, 2014" />
-    </ListItem>
-    <Divider/>
-    <Card sx={{ maxWidth: 345 }}>
+const Column: VFC<Props> = (props) => (
+<>
+    <Card sx={{ maxWidth: 445 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -38,13 +31,16 @@ const Column = () => (
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          props.postId === props.uid ? (
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          ) : null
         }
         title="Chizan "
         subheader="September 14, 2016"
       />
+
       <CardMedia
         component="img"
         height="194"
@@ -53,9 +49,7 @@ const Column = () => (
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {props.text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -67,7 +61,9 @@ const Column = () => (
         </IconButton>
       </CardActions>
     </Card>
-  </List>
+      <Divider/>
+      
+</>
 );
 
 export default Column;

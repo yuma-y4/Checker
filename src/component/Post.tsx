@@ -1,5 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { VFC, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled, useTheme } from '@mui/material/styles';
@@ -15,15 +16,23 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import CloseIcon from '@mui/icons-material/Close';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Divider from '@mui/material/Divider';
+import { db } from '../firebase';
 
 const Input = styled('input')({
   display: 'none',
 });
 
-const Post = () => {
+export type LoginUser = {
+  email: string;
+  displayName: string;
+  uid: string;
+};
+
+const Post: VFC<LoginUser> = (props) => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -33,6 +42,24 @@ const Post = () => {
   };
   const DialogClose = () => {
     setOpen(false);
+  };
+
+  const [Posttext, setPosttext] = useState('');
+
+  const PostCard = async () => {
+    const userDocumentRef = doc(db, 'Posttweets', props.uid);
+    await setDoc(userDocumentRef, {
+      username: props.displayName,
+      postId: props.uid,
+      text: Posttext,
+      timpstamp: serverTimestamp(),
+    })
+      .then(() => {
+        // dse
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -74,26 +101,29 @@ const Post = () => {
             minRows={4}
             fullWidth
             margin="dense"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPosttext(e.target.value);
+            }}
           />
         </DialogContent>
 
         <DialogActions>
           <Divider />
           <Grid container>
-            <label htmlFor="contained-button-file">
-              <Input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-              />
-              <IconButton aria-label="upload picture" component="span">
-                <InsertPhotoIcon />
-              </IconButton>
-            </label>
+            <Input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <IconButton aria-label="upload picture" component="span">
+              <InsertPhotoIcon />
+            </IconButton>
           </Grid>
           <Grid item>
-            <Button endIcon={<SendIcon />}>Send</Button>
+            <Button endIcon={<SendIcon />} onClick={PostCard}>
+              Send
+            </Button>
           </Grid>
         </DialogActions>
       </Dialog>
