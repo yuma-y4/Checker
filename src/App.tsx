@@ -41,6 +41,6 @@ const App: VFC = () => {
         <Redirect push to="/signin" />
       )}
     </BrowserRouter>
-  );
+   );
 };
 export default App;

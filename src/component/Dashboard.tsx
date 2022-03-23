@@ -106,6 +106,10 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const Div = styled('div')({
+  overflow: 'scroll',
+});
+
 const Dashboard = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -266,15 +270,17 @@ const Dashboard = () => {
               <ListItemText primary="Home" />
             </ListItem>
             <Divider />
-            {posts.map((post) => (
-              <Column
-                key={post.id}
-                postId={post.postId}
-                text={post.text}
-                username={post.username}
-                uid={LoginUser.uid}
-              />
-            ))}
+            <Div id="scroll-container">
+              {posts.map((post) => (
+                <Column
+                  key={post.id}
+                  postId={post.postId}
+                  text={post.text}
+                  username={post.username}
+                  uid={LoginUser.uid}
+                />
+              ))}
+            </Div>
           </>
         )}
       </Box>
