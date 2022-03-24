@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Divider from '@mui/material/Divider';
+import Zoom from 'react-medium-image-zoom';
 
 type Props = {
   username: string;
@@ -22,7 +23,7 @@ type Props = {
 };
 
 const Column: VFC<Props> = (props) => (
-<>
+  <>
     <Card sx={{ maxWidth: 445 }}>
       <CardHeader
         avatar={
@@ -37,16 +38,20 @@ const Column: VFC<Props> = (props) => (
             </IconButton>
           ) : null
         }
-        title="Chizan "
+        title="Chizan"
         subheader="September 14, 2016"
       />
-
-      <CardMedia
-        component="img"
-        height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
-      />
+      <Zoom
+        overlayBgColorStart="rgba(255, 255, 255, 0)"
+        overlayBgColorEnd="rgba(0, 0, 0, 0.89)"
+      >
+        <CardMedia
+          component="img"
+          height="194"
+          image="/static/images/cards/paella.jpg"
+          alt="Paella dish"
+        />
+      </Zoom>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.text}
@@ -61,9 +66,8 @@ const Column: VFC<Props> = (props) => (
         </IconButton>
       </CardActions>
     </Card>
-      <Divider/>
-      
-</>
+    <Divider />
+  </>
 );
 
 export default Column;

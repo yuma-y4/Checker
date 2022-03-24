@@ -7,6 +7,7 @@ import { login, logout, selectUser } from './features/userSlice';
 import SignUp from './component/SignUp';
 import SignIn from './component/SignIn';
 import Dashboard from './component/Dashboard';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const App: VFC = () => {
   const LoginUser = useSelector(selectUser);
@@ -27,7 +28,7 @@ const App: VFC = () => {
         dispatch(logout());
       }
     });
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
@@ -41,6 +42,6 @@ const App: VFC = () => {
         <Redirect push to="/signin" />
       )}
     </BrowserRouter>
-   );
+  );
 };
 export default App;
